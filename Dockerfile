@@ -5,4 +5,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 7777
-CMD [ "node", "server.js" ]
+CMD [ "node", "index.js" ]
