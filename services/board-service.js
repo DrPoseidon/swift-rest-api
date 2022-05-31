@@ -14,7 +14,6 @@ class BoardService {
   async createTask(body) {
     try {
       const { _id, title, description, startDate, endDate } = body;
-
       let board = await BoardModel.findByIdAndUpdate(_id);
       board.list.push({ title, description, startDate, endDate });
       await board.save();

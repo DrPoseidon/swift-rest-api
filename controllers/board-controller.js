@@ -5,6 +5,7 @@ class InstaPhotosController {
   async addTask(req, res) {
     try {
       const { body } = req;
+      console.log('!!!addTask!!!', body);
       const { status } = await BoardService.createTask(body);
 
       res.sendStatus(status);
