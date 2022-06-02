@@ -1,8 +1,0 @@
-cd swift-rest-api
-git pull
-
-docker stop
-docker rm
-
-docker build . -t swift-rest-api
-docker run -p 7777:7777 -d swift-rest-api

@@ -1,7 +1,6 @@
 const Router = require('express').Router;
 const router = new Router;
-const UserController = require('./controllers/user-controller');
-const BoardController = require('./controllers/board-controller');
+const BoardController = require('./board-controller');
 
 router.post('/createTask', BoardController.createTask);
 

@@ -1,4 +1,4 @@
-const BoardModel = require('../models/board-model');
+const BoardModel = require('./board-model');
 
 class BoardService {
   async getBoard() {

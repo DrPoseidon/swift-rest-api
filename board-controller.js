@@ -1,4 +1,4 @@
-const BoardService = require('../services/board-service');
+const BoardService = require('./board-service');
 
 class BoardController {
   async createTask(req, res) {
