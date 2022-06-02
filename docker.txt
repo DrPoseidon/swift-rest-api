@@ -1,3 +1,6 @@
+cd swift-rest-api
+git pull
+
 docker stop
 docker rm
 

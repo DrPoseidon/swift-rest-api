@@ -29,23 +29,23 @@ class BoardService {
   async updateTask(body) {
     try {
       const { oldSectionId, newSectionId, _id, title, description, startDate, endDate } = body;
-      console.log(oldSectionId)
+      console.log(oldSectionId, newSectionId, _id, title, description, startDate, endDate)
       let oldSection = await BoardModel.findById(oldSectionId);
       if (newSectionId) {
         let newSection = await BoardModel.findById(newSectionId);
         oldSection.list = oldSection.list.filter(el => el._id !== _id);
         newSection.list.push(body);
         await newSection.save();
-        await oldSection.save();
       } else {
         const index = oldSection.list.map(el => el._id === _id).indexOf(true);
         if (index !== - 1) {
           oldSection.list[index] = { _id, title, description, startDate, endDate };
-          await oldSection.save();
         } else {
           return { status: 404 };
         }
       }
+
+      await oldSection.save();
 
       return { status: 200 };
     } catch (e) {
