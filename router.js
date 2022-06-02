@@ -3,51 +3,12 @@ const router = new Router;
 const UserController = require('./controllers/user-controller');
 const BoardController = require('./controllers/board-controller');
 
-router.post('/addTask', BoardController.addTask);
+router.post('/createTask', BoardController.createTask);
+
+router.put('/updateTask', BoardController.updateTask);
 
 router.post('/createSection', BoardController.createSection);
 
 router.get('/getBoard', BoardController.getBoard);
-
-// эндпоинт регистрации, с проверкой валидности email, пароля и имени
-// router.post('/registration',
-//   check('email', 'Email не может быть пустым').notEmpty(),
-//   check('password', 'Пароль должен быть больше 4 и меньше 30 символов')
-//     .isLength({min: 4, max: 30}),
-//   check('name', 'Минимальная длина имени 3 символа')
-//     .isLength({min: 3}),
-//   UserController.registration);
-//
-// // эндпоинт обновления токенов
-// router.post('/refresh', UserController.refresh);
-//
-//
-// // эндпоинт проверки авторизованности
-// router.post('/checkAuth', authMiddleware, UserController.checkAuth);
-//
-// //
-// router.get('/activate/:activationLink', UserController.activate);
-//
-// router.get('/users', authMiddleware, UserController.getAllUsers);
-//
-// router.post('/login', UserController.login);
-//
-// router.post('/logout', UserController.logout);
-//
-// router.put('/addToCart', authMiddleware, UserController.addToCart);
-//
-// router.post('/getCart', authMiddleware, UserController.getCart);
-//
-// router.post('/removeFromCart', authMiddleware, UserController.removeFromCart);
-//
-// router.put('/changeProductQuantity', authMiddleware, UserController.changeProductQuantity)
-//
-// router.post('/checkout', authMiddleware, UserController.checkout);
-//
-// router.post('/getOrders', authMiddleware, UserController.getOrders);
-//
-// router.post('/setInstaPhotos', InstaController.setPhotos);
-//
-// router.get('/getInstaPhotos', InstaController.getPhotos);
 
 module.exports = router

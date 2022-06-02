@@ -13,10 +13,38 @@ class BoardService {
 
   async createTask(body) {
     try {
-      const { _id, title, description, startDate, endDate } = body;
-      let board = await BoardModel.findByIdAndUpdate(_id);
-      board.list.push({ title, description, startDate, endDate });
-      await board.save();
+      let board = await BoardModel.find();
+      const { _id } = board[0];
+      let section = await BoardModel.findById(_id);
+      section.list.push(body);
+      await section.save();
+
+      return { status: 200 };
+    } catch (e) {
+      console.log('!!!createTask!!!', e);
+      return { status: 500 };
+    }
+  }
+
+  async updateTask(body) {
+    try {
+      const { oldSectionId, newSectionId, _id, title, description, startDate, endDate } = body;
+      let oldSection = await BoardModel.findById(oldSectionId);
+      if (newSectionId) {
+        let newSection = await BoardModel.findById(newSectionId);
+        oldSection.list = oldSection.list.filter(el => el._id !== _id);
+        newSection.list.push(body);
+        await newSection.save();
+        await oldSection.save();
+      } else {
+        const index = oldSection.list.map(el => el._id === _id).indexOf(true);
+        if (index !== - 1) {
+          oldSection.list[index] = { _id, title, description, startDate, endDate };
+          await oldSection.save();
+        } else {
+          return { status: 404 };
+        }
+      }
 
       return { status: 200 };
     } catch (e) {
@@ -27,40 +55,14 @@ class BoardService {
 
   async createSection(body) {
     try {
-      await BoardModel.create({ name: body.name, list: [] });
+      const { _id, name } = body;
+      await BoardModel.create({ _id, name, list: [] });
+      return { status: 200 };
     } catch (e) {
-      console.log(e);
+      console.log('!!!createSection!!!', e);
       return { status: 500 }
     }
-
-    return { status: 200 }
   }
-
-  // async getPhotos() {
-  //   const photos = await InstaPhotosModel.find();
-  //
-  //   if (photos) {
-  //     return { status: 200, data: photos.length ? photos[0] : {}  };
-  //   } else {
-  //     return { status: 404 };
-  //   }
-  // }
-  //
-  // async setPhotos(data) {
-  //   try {
-  //     let photos = await InstaPhotosModel.find();
-  //     if (photos.length) {
-  //       photos[0] = data;
-  //       await photos.save();
-  //     } else {
-  //       await InstaPhotosModel.create(data);
-  //     }
-  //
-  //     return { status: 200 };
-  //   } catch (e) {
-  //     return { status: 500 };
-  //   }
-  // }
 }
 
 module.exports = new BoardService();
