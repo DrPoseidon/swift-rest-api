@@ -23,6 +23,17 @@ class BoardController {
     }
   }
 
+  async deleteTask(req, res) {
+    try {
+      const { sectionId, _id } = req.query;
+      const { status } = await BoardService.deleteTask({ sectionId, _id });
+      res.sendStatus(status);
+    } catch(e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  }
+
   async createSection(req, res) {
     try {
       const { body } = req;

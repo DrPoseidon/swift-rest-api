@@ -29,6 +29,7 @@ class BoardService {
   async updateTask(body) {
     try {
       const { oldSectionId, newSectionId, _id, title, description, startDate, endDate } = body;
+      console.log(oldSectionId)
       let oldSection = await BoardModel.findById(oldSectionId);
       if (newSectionId) {
         let newSection = await BoardModel.findById(newSectionId);
@@ -45,6 +46,20 @@ class BoardService {
           return { status: 404 };
         }
       }
+
+      return { status: 200 };
+    } catch (e) {
+      console.log(e);
+      return { status: 500 };
+    }
+  }
+
+  async deleteTask(body) {
+    try {
+      const { sectionId, _id } = body;
+      let section = await BoardModel.findById(sectionId);
+      section.list = section.list.filter(el => el._id !== _id);
+      await section.save();
 
       return { status: 200 };
     } catch (e) {
